@@ -304,8 +304,8 @@ func HeaderFromDependentVolume(volume *migration.DependentVolume) *migration.Mig
 
 // ProtobufToDependentVolume converts a migration.DependentVolume into DependentVolumeArgs.
 func ProtobufToDependentVolume(volume *migration.DependentVolume, migrationType Type, overrides map[string]string) DependentVolumeArgs {
-	volName := *volume.Name
-	poolName := *volume.Pool
+	volName := volume.GetName()
+	poolName := volume.GetPool()
 	if overrides != nil {
 		if overrides["pool"] != "" {
 			poolName = overrides["pool"]
@@ -319,11 +319,11 @@ func ProtobufToDependentVolume(volume *migration.DependentVolume, migrationType 
 	return DependentVolumeArgs{
 		Name:          volName,
 		Pool:          poolName,
-		DeviceName:    *volume.DeviceName,
-		ContentType:   *volume.ContentType,
+		DeviceName:    volume.GetDeviceName(),
+		ContentType:   volume.GetContentType(),
 		MigrationType: migrationType,
 		Snapshots:     volume.Snapshots,
-		VolumeSize:    *volume.VolumeSize,
+		VolumeSize:    volume.GetVolumeSize(),
 	}
 }
 
